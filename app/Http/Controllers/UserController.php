@@ -19,4 +19,25 @@ class UserController extends Controller
 
         return redirect()->back()->with('status', 'User data stored successfully.');
     }
+
+    public function deleteUser($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back()->with('status', 'User deleted successfully.');
+    }
+
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return view('user.edit', ['user' => $user]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        // dd($request->all(),$id);
+        $user = User::findOrFail($id);
+        $user->update($request->all());
+        return redirect('user/create')->with('status', 'User deleted successfully.');
+    }
 }

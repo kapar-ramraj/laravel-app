@@ -63,8 +63,8 @@
                     <td>{{$item->email}}</td>
                     <td>{{$item->phone}}</td>
                     <td>
-                        <a href="edit.php?id={{$item->id}}" class="btn btn-warning btn-sm">Edit</a>
-                        <a href="?delete={{$item->id}}" onclick="return confirm('Delete this User?')" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="{{route('user.edit',$item->id)}}" class="btn btn-warning btn-sm">Edit</a>
+                        <a href="{{route('user.delete',$item->id)}}" onclick="return confirm('Delete this User?')" class="btn btn-danger btn-sm">Delete</a>
                     </td>
                 </tr>
                 @endforeach
