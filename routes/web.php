@@ -7,7 +7,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/user/create', [UserController::class,'getUserForm']);
+Route::get('/user-create', [UserController::class,'getUserForm']);
 Route::post('/user/store', [UserController::class,'storeUser']);
 
 Route::get('/user/delete/{id}', [UserController::class,'deleteUser'])->name('user.delete');
