@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    public function getUserList()
+    {
+        $users = User::all(); // User::get();
+        return view('user.index', compact('users'));
+    }
     public function getUserForm()
     {
         $users = User::all(); // User::get();
@@ -17,7 +23,7 @@ class UserController extends Controller
     {
         User::create($request->all());
 
-        return redirect()->back()->with('status', 'User data stored successfully.');
+        return redirect()->route('user.index')->with('status', 'User data stored successfully.');
     }
 
     public function deleteUser($id)
@@ -38,6 +44,6 @@ class UserController extends Controller
         // dd($request->all(),$id);
         $user = User::findOrFail($id);
         $user->update($request->all());
-        return redirect('user/create')->with('status', 'User deleted successfully.');
+        return redirect()->route('user.index')->with('status', 'User deleted successfully.');
     }
 }
