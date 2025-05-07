@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -28,6 +29,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/user/profile', function () {});
     Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+    Route::get('/student/profile', [StudentController::class, 'getProfile'])->name('student.profile');
+    Route::post('/student/profile', [StudentController::class, 'updateProfile'])->name('student.profile.update');
 });
 
 
