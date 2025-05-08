@@ -48,6 +48,8 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        // Store session variable
+        session(['register' => true]);
         return Validator::make($data, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['string', 'max:255'],
