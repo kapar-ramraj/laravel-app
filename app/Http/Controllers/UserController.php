@@ -21,8 +21,19 @@ class UserController extends Controller
 
     public function storeUser(Request $request)
     {
-        User::create($request->all());
-
+        $validateData =  $request->validate([
+            'fname' => ['required', 'string', 'max:255'],
+            'lname' => ['string', 'max:255'],
+            'phone' => ['string', 'max:20'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:8'],
+        ], [
+            'fname:required' => 'The First Name field is required!',
+            'fname:max' => 'The First Name field lenght must not be greater than 255 characters!',
+        ]);
+        
+        // dd($validateData);
+        User::create($validateData);
         return redirect()->route('user.index')->with('status', 'User data stored successfully.');
     }
 

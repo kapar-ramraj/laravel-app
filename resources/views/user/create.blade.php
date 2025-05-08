@@ -20,28 +20,53 @@
                                 <div class="card-body">
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Enter First Name" name="fname">
+                                        <input type="text" class="form-control" id="fname"
+                                            placeholder="Enter First Name" name="fname" value="{{old('fname')}}">
+                                        @error('fname')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Last Name</label>
                                         <input type="text" class="form-control" id=""
-                                            placeholder="Enter First Name" name="lname">
+                                            placeholder="Enter First Name" name="lname" value="{{old('lname')}}">
+                                            @error('lname')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Email</label>
                                         <input type="email" class="form-control" id="" placeholder="Enter Email"
-                                            name="email">
+                                            name="email" value="{{old('email')}}">
+                                            @error('email')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputEmail1">Phone</label>
                                         <input type="number" class="form-control" id="" placeholder="Enter Phone"
-                                            name="phone">
+                                            name="phone" value="{{old('phone')}}">
+                                            @error('phone')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Password</label>
                                         <input type="password" class="form-control" id="exampleInputPassword1"
-                                            placeholder="Password" name="password">
+                                            placeholder="Password" name="password" value="{{old('password')}}">
+                                            @error('password')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
 
                                 </div>

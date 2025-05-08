@@ -50,12 +50,17 @@ class RegisterController extends Controller
     {
         // Store session variable
         session(['register' => true]);
+        // session()->forget('register');
+
         return Validator::make($data, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['string', 'max:255'],
             'phone' => ['string', 'max:20'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ],[
+            'fname:required' => 'The First Name field is required!',
+            'fname:max' => 'The First Name field lenght must not be greater than 255 characters!',
         ]);
     }
 

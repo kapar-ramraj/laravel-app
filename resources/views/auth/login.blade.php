@@ -18,29 +18,37 @@
                     <div class="card-body p-4">
                         <ul class="nav nav-tabs mb-4" id="authTabs" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link {{session()->has('register') && session('register') ? '' : 'active'}}" id="login-tab" data-bs-toggle="tab"
-                                    data-bs-target="#login" type="button" role="tab">Login</button>
+                                <button
+                                    class="nav-link {{ session()->has('register') && session('register') ? '' : 'active' }}"
+                                    id="login-tab" data-bs-toggle="tab" data-bs-target="#login" type="button"
+                                    role="tab">Login</button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link {{session()->has('register') && session('register') ? 'active' : ''}}" id="register-tab" data-bs-toggle="tab"
-                                    data-bs-target="#register" type="button" role="tab">Register</button>
+                                <button
+                                    class="nav-link {{ session()->has('register') && session('register') ? 'active' : '' }}"
+                                    id="register-tab" data-bs-toggle="tab" data-bs-target="#register" type="button"
+                                    role="tab">Register</button>
                             </li>
                         </ul>
-                        {{-- Show Validation Errors --}}
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul class="mb-0">
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
+
 
 
                         <div class="tab-content" id="authTabsContent">
                             {{-- Login Form --}}
-                            <div class="tab-pane fade {{session()->has('register') && session('register')? '' : 'show active'}}" id="login" role="tabpanel">
+
+                            <div class="tab-pane fade {{ session()->has('register') && session('register') ? '' : 'show active' }}"
+                                id="login" role="tabpanel">
+
+                                {{-- Show Validation Errors --}}
+                                @if ($errors->any())
+                                    <div class="alert alert-danger">
+                                        <ul class="mb-0">
+                                            @foreach ($errors->all() as $error)
+                                                <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                                 <form action="{{ route('login') }}" method="POST">
                                     @csrf
 
@@ -67,30 +75,43 @@
                             </div>
 
                             {{-- Register Form --}}
-                            <div class="tab-pane fade {{session()->has('register') && session('register') ? 'show active' : ''}}" id="register" role="tabpanel">
+                            <div class="tab-pane fade {{ session()->has('register') && session('register') ? 'show active' : '' }}"
+                                id="register" role="tabpanel">
                                 <form action="{{ route('register') }}" method="POST">
                                     @csrf
 
                                     <div class="mb-3">
                                         <label for="registerName" class="form-label">First Name</label>
                                         <input type="text" name="fname" class="form-control" id="registerName"
-                                            required>
+                                            value="{{ old('fname') }}" required>
+                                        @error('fname')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="registerName" class="form-label">Last Name</label>
-                                        <input type="text" name="lname" class="form-control" id="registerName"
-                                            required>
+                                        <input type="text" name="lname" class="form-control" id="lname"
+                                            value="{{ old('lname') }}" required>
+                                        @error('lname')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="registerEmail" class="form-label">Email address</label>
                                         <input type="email" name="email" class="form-control" id="registerEmail"
-                                            required>
+                                            value="{{ old('email') }}" required>
                                         @error('email')
+                                            @if(session()->has('register') && session('register'))
                                             <p class="text-danger">
                                                 {{ $message }}
                                             </p>
+                                            @endif
                                         @enderror
                                     </div>
 
@@ -98,13 +119,23 @@
                                     <div class="mb-3">
                                         <label for="registerName" class="form-label">Phone</label>
                                         <input type="number" name="phone" class="form-control" id="registerName"
-                                            required>
+                                            value="{{ old('phone') }}" required>
+                                        @error('phone')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="registerPassword" class="form-label">Password</label>
                                         <input type="password" name="password" class="form-control"
                                             id="registerPassword" required>
+                                        @error('password')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
 
                                     <div class="mb-3">
