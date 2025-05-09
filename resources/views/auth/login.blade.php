@@ -54,7 +54,7 @@
 
                                     <div class="mb-3">
                                         <label for="loginEmail" class="form-label">Email address</label>
-                                        <input type="email" name="email" class="form-control" id="loginEmail"
+                                        <input type="email" name="email" class="form-control" id="loginEmail" value="{{old('email')}}"
                                             required>
                                     </div>
 

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
@@ -32,6 +33,8 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/student/profile', [StudentController::class, 'getProfile'])->name('student.profile');
     Route::post('/student/profile', [StudentController::class, 'updateProfile'])->name('student.profile.update');
+
+    Route::resource('categories', CategoryController::class);
 });
 
 
