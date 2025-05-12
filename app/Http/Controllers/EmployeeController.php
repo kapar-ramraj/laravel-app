@@ -7,9 +7,18 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function getEmployeeList()
+    public function getEmployeeList(Request $request)
     {
-        $employees = Employee::all(); // Employee::get();
+        // dd($request->all(),$request->search);
+        $query = Employee::query();
+        if ($request->search) {
+            $query->where('fname', 'like', '%' . $request->search . '%')
+                ->orWhere('lname', 'like', '%' . $request->search . '%')
+                ->orWhere('email', 'like', '%' . $request->search . '%')
+                ->orWhere('phone', 'like', '%' . $request->search . '%')
+                ->orWhere('designation', 'like', '%' . $request->search . '%');
+        }
+        $employees = $query->get(); // Employee::get();
         return view('employee.index', compact('employees'));
     }
     public function getEmployeeForm()

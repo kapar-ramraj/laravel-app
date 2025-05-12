@@ -11,22 +11,31 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                @include('layouts.flash_message') 
+                                @include('layouts.flash_message')
                                 <h3 class="card-title">Employees List</h3>
 
                                 <div class="card-tools">
-                                    <div class="input-group input-group-sm" style="width: 150px;">
-                                        <input type="text" name="table_search" class="form-control float-right"
-                                            placeholder="Search">
+                                    <form action="">
+                                        <div class="input-group input-group-sm" style="width: 150px;">
+                                            <input type="text" name="search" class="form-control float-right"
+                                                placeholder="Search" value="{{request()->search}}">
 
-                                        <div class="input-group-append">
-                                            <button type="submit" class="btn btn-default">
-                                                <i class="fas fa-search"></i>
-                                            </button>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-default">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </form>
+                                </div>
+                                <br/>
+
+                                <div>
+                                    <a href="{{ route('employee.create') }}" class="btn btn-primary float-right mt-2">Add
+                                        Employee</a>
                                 </div>
                             </div>
+
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
                                 <table class="table table-hover text-nowrap">
@@ -54,13 +63,15 @@
                                                 <td>{{ $item->salary }}</td>
                                                 <td>{{ $item->designation }}</td>
                                                 <td>
-                                                    <a href="{{ route('employee.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                                    <a href="{{ route('employee.delete', $item->id) }}" onclick="return confirm('Delete this User?')"
+                                                    <a href="{{ route('employee.edit', $item->id) }}"
+                                                        class="btn btn-warning btn-sm">Edit</a>
+                                                    <a href="{{ route('employee.delete', $item->id) }}"
+                                                        onclick="return confirm('Delete this User?')"
                                                         class="btn btn-danger btn-sm">Delete</a>
                                                 </td>
                                             </tr>
                                         @endforeach
-                        
+
                                     </tbody>
                                 </table>
                             </div>
@@ -76,6 +87,4 @@
     <!-- /.card -->
 @endsection
 
-<script>
-    
-</script>
+<script></script>
