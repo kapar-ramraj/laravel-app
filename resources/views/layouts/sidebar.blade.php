@@ -139,6 +139,30 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-chart-pie"></i>
+                        <p>
+                            Publishers
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('publishers.index')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>publishers List</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{route('publishers.create')}}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create Publisher</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 {{-- @endif --}}
                 <li class="nav-item active">
                     <a href="{{route('student.profile')}}" class="nav-link">

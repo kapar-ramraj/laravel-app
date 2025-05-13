@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -35,6 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/student/profile', [StudentController::class, 'updateProfile'])->name('student.profile.update');
 
     Route::resource('categories', CategoryController::class);
+    //Publishers Route
+    Route::resource('publishers', PublisherController::class);
 });
 
 

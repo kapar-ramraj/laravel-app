@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Publisher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PublisherController extends Controller
 {
@@ -12,7 +13,8 @@ class PublisherController extends Controller
      */
     public function index()
     {
-        //
+        $items = Publisher::all(); // User::get();
+        return view('library.publisher.index', compact('items'));
     }
 
     /**
@@ -20,7 +22,8 @@ class PublisherController extends Controller
      */
     public function create()
     {
-        //
+        $countries = DB::table('countries')->get();
+        return view('library.publisher.create', compact('countries'));
     }
 
     /**
@@ -28,7 +31,21 @@ class PublisherController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->all());
+
+        $validateData =  $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'country' => ['integer', 'required'],
+            'city' => ['string', 'required'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:publishers'],
+            'phone' => ['required'],
+            'website' => ['nullable', 'max:255'],
+            'address' => ['required', 'max:255'],
+        ]);
+
+        // dd($validateData);
+        Publisher::create($validateData);
+        return redirect()->route('publishers.index')->with('status', 'Publisher data stored successfully.');
     }
 
     /**

@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+    Publisher List
+@endsection
+
 @section('styles')
 <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
   <!-- DataTables -->
@@ -18,18 +22,18 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h3 class="card-title">User List</h3>
+                                <h3 class="card-title">Publisher List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="userTable" class="table table-bordered table-striped">
+                                <table id="dataTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
+                                            <th>Name</th>
+                                            <th>Address</th>
                                             <th>Email</th>
-                                            <th>Phone</th>
+                                            <th>Website</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -37,19 +41,23 @@
                                         @php
                                             $sn = 1;
                                         @endphp
-                                        @foreach ($users as $item)
+                                        @foreach ($items as $item)
                                             <tr>
                                                 <td>{{ $sn++ }}</td>
-                                                <td>{{ $item->fname }}</td>
-                                                <td>{{ $item->lname }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->address }}</td>
                                                 <td>{{ $item->email }}</td>
-                                                <td>{{ $item->phone }}</td>
+                                                <td>{{ $item->website }}</td>
                                                 <td>
-                                                    <a href="{{ route('user.edit', $item->id) }}"
+                                                    <a href="{{ route('publishers.edit', $item->id) }}"
                                                         class="btn btn-sm btn-primary"><i class="fa-solid fa-pencil"></i></a>
-                                                    <a href="{{ route('user.delete', $item->id) }}"
-                                                        onclick="return confirm('Delete this User?')"
-                                                        class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                                    <form action="{{ route('publishers.destroy', $item->id) }}" method="POST" style="display: inline;">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit" onclick="return confirm('Are you sure?')" class="btn btn-sm btn-danger">
+                                                            <i class="fas fa-trash-alt"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -98,12 +106,12 @@
     <!-- Page specific script -->
     <script>
         $(function() {
-            $("#userTable").DataTable({
+            $("#dataTable").DataTable({
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
             // $('#example2').DataTable({
             //     "paging": true,
             //     "lengthChange": false,
