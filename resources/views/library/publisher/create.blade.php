@@ -1,5 +1,9 @@
 @extends('layouts.master')
 
+@section('title')
+Create Publisher
+@endsection
+
 @section('content')
     <div class="content-wrapper">
         <!-- Main content -->
@@ -37,7 +41,7 @@
                                         <option value="{{$item->id}}">{{$item->name}}</option>
                                         @endforeach
                                         </select>
-                                        @error('lname')
+                                        @error('country')
                                             <p class="text-danger">
                                                 {{ $message }}
                                             </p>

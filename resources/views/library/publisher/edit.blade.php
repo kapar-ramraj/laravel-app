@@ -1,6 +1,7 @@
 @extends('layouts.master')
+
 @section('title')
-    Update User
+Edit Publisher
 @endsection
 
 @section('content')
@@ -14,64 +15,99 @@
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Edit User</h3>
+                                <h3 class="card-title">Edit Publisher</h3>
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form method="POST" action="{{ route('user.update', $user->id) }}">
+                            <form method="POST" action="{{route('publishers.update',$publisher)}}" class="mb-4">
                                 @csrf
                                 @method('PUT')
-
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Enter First Name" name="fname" value="{{ old('fname') ?? $user->fname }}">
-                                        @error('fname')
+                                        <label for="exampleInputcity1">Name</label>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Full Name" name="name" value="{{ old('name') ?? $publisher->name}}">
+                                        @error('name')
                                             <p class="text-danger">
                                                 {{ $message }}
                                             </p>
                                         @enderror
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">Last Name</label>
-                                        <input type="text" class="form-control" id=""
-                                            placeholder="Enter Last Name" name="lname" value="{{ old('lname') ?? $user->lname }}">
-                                        @error('lname')
-                                            <p class="text-danger">
-                                                {{ $message }}
-                                            </p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email</label>
-                                        <input type="email" class="form-control" id="" placeholder="Enter Email"
-                                            name="email" value="{{ old('email') ?? $user->email }}">
-                                        @error('email')
-                                            <p class="text-danger">
-                                                {{ $message }}
-                                            </p>
-                                        @enderror
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Phone</label>
-                                        <input type="number" class="form-control" id="" placeholder="Enter Phone"
-                                            name="phone" value="{{ old('phone') ?? $user->phone }}">
-                                        @error('phone')
+                                        <label for="exampleInputPassword1">Country</label>
+                                        <select  class="form-control" id="country"
+                                             name="country">
+                                        <option value="">Select Country</option>
+                                        @foreach ($countries as $item)
+                                        <option value="{{$item->id}}" {{ $item->id == $publisher->country ? 'selected' : ''}}>{{$item->name}}</option>
+                                        @endforeach
+                                        </select>
+                                        @error('country')
                                             <p class="text-danger">
                                                 {{ $message }}
                                             </p>
                                         @enderror
                                     </div>
                                     
+                                    <div class="form-group">
+                                        <label for="exampleInputcity1">City</label>
+                                        <input type="city" class="form-control" id="" placeholder="Enter city"
+                                            name="city" value="{{old('city') ?? $publisher->city}}">
+                                            @error('city')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputcity1">Address</label>
+                                        <input type="city" class="form-control" id="" placeholder="Enter Address"
+                                            name="address" value="{{old('address') ?? $publisher->address}}">
+                                            @error('address')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputcity1">Phone</label>
+                                        <input type="number" class="form-control" id="" placeholder="Enter Phone"
+                                            name="phone" value="{{old('phone') ?? $publisher->phone}}">
+                                            @error('phone')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email"
+                                            placeholder="Email" name="email" value="{{old('email') ?? $publisher->email}}">
+                                            @error('email')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleInputcity1">website</label>
+                                        <input type="text" class="form-control" id="" placeholder="Enter website"
+                                            name="website" value="{{old('website') ?? $publisher->website}}">
+                                            @error('website')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
 
                                 </div>
                                 <!-- /.card-body -->
 
                                 <div class="card-footer">
-                                    <button type="submit" class="btn btn-primary">Update</button>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
                                 </div>
-                                
                             </form>
                         </div>
                     </div>
@@ -81,3 +117,4 @@
     </div>
     <!-- /.card -->
 @endsection
+
