@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PublisherController;
@@ -38,6 +39,9 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('categories', CategoryController::class);
     //Publishers Route
     Route::resource('publishers', PublisherController::class);
+
+    Route::resource('authors', AuthorController::class);
+
 });
 
 

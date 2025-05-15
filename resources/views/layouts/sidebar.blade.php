@@ -164,6 +164,32 @@
                         </li>
                     </ul>
                 </li>
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link {{ Request::is('authors*') ? 'active' : '' }}">
+                        <i class="fas fa-user"></i> &nbsp;
+                        <p>
+                            Authors
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('authors.index')}}" class="nav-link {{ Route::is('authors.index') ? 'active' : '' }}">
+                                <i class="fas fa-user"></i> 
+                                <p>Authors List</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="{{route('authors.create')}}" class="nav-link {{ Route::is('authors.create') ? 'active' : '' }}"  >
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Create Authors</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- @endif --}}
                 <li class="nav-item active">
                     <a href="{{route('student.profile')}}" class="nav-link">
