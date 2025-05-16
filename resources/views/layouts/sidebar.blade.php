@@ -15,7 +15,7 @@
                 <img src="{{asset('storage/'.auth()->user()->profile)}}" class="img-circle elevation-2" alt="User Image">
             </div>
             <div class="info">
-                <a href="#" class="d-block">{{auth()->user()->fname.' '.auth()->user()->lname}}</a>
+                <a href="{{route('student.profile')}}" class="d-block">{{auth()->user()->fname.' '.auth()->user()->lname}}</a>
             </div>
         </div>
 
@@ -70,7 +70,7 @@
                 
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::is('user*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        &nbsp;<i class="fa fa-users" aria-hidden="true"></i>&nbsp;
                         <p>
                             Users
                             <i class="right fas fa-angle-left"></i>
@@ -79,13 +79,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('user.index')}}" class="nav-link {{ Route::is('user.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp;
                                 <p>User List</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('user.create')}}" class="nav-link {{ Route::is('user.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                                 <p>Create User</p>
                             </a>
                         </li>
@@ -118,7 +118,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::is('categories*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                       &nbsp;<i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;
                         <p>
                             Categories
                             <i class="right fas fa-angle-left"></i>
@@ -127,13 +127,13 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('categories.index')}}" class="nav-link {{ Route::is('categories.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp;
                                 <p>Categories List</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="{{route('categories.create')}}" class="nav-link {{ Route::is('categories.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                                 <p>Create Category</p>
                             </a>
                         </li>
@@ -142,7 +142,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::is('publishers*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-chart-pie"></i>
+                        &nbsp;<i class="fas fa-newspaper"></i>&nbsp;
                         <p>
                             Publishers
                             <i class="right fas fa-angle-left"></i>
@@ -151,14 +151,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('publishers.index')}}" class="nav-link {{ Route::is('publishers.index') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>publishers List</p>
+                                &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp;
+                                <p>Publishers List</p>
                             </a>
                         </li>
                         
                         <li class="nav-item">
                             <a href="{{route('publishers.create')}}" class="nav-link {{ Route::is('publishers.create') ? 'active' : '' }}"  >
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                                 <p>Create Publisher</p>
                             </a>
                         </li>
@@ -167,7 +167,7 @@
 
                 <li class="nav-item">
                     <a href="#" class="nav-link {{ Request::is('authors*') ? 'active' : '' }}">
-                        <i class="fas fa-user"></i> &nbsp;
+                        &nbsp;<i class="fas fa-pen-nib"></i>&nbsp;
                         <p>
                             Authors
                             <i class="right fas fa-angle-left"></i>
@@ -176,14 +176,14 @@
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
                             <a href="{{route('authors.index')}}" class="nav-link {{ Route::is('authors.index') ? 'active' : '' }}">
-                                <i class="fas fa-user"></i> 
+                                &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp; 
                                 <p>Authors List</p>
                             </a>
                         </li>
                         
                         <li class="nav-item">
                             <a href="{{route('authors.create')}}" class="nav-link {{ Route::is('authors.create') ? 'active' : '' }}"  >
-                                <i class="far fa-circle nav-icon"></i>
+                                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
                                 <p>Create Authors</p>
                             </a>
                         </li>
@@ -193,14 +193,14 @@
                 {{-- @endif --}}
                 <li class="nav-item active">
                     <a href="{{route('student.profile')}}" class="nav-link">
-                        <i class="nav-icon fas fa-th"></i>
+                     &nbsp;<i class="fa fa-id-badge" aria-hidden="true"></i>&nbsp;
                         Profile
                     </a>
                 </li>
 
                 <li class="nav-item">
                     <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class="nav-icon fas fa-th"></i>
+                        &nbsp;<i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;
                         Logout
                     </a>
                 
