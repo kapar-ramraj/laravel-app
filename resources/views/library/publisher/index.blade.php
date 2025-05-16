@@ -22,6 +22,8 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
+                                @include('layouts.flash_message')
+
                                 <h3 class="card-title">Publisher List</h3>
                             </div>
                             <!-- /.card-header -->
