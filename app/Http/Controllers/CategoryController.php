@@ -15,7 +15,6 @@ class CategoryController extends Controller
             ->select('categories.*', 'parent.name as parentName')
             ->get();
 
-        // dd($categories);
         return view('library.categories.index', compact('categories'));
     }
 

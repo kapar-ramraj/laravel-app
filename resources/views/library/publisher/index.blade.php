@@ -27,8 +27,8 @@
                                 <h3 class="card-title">Publisher List</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="dataTable" class="table table-bordered table-striped">
+                            <div class="card-body table-responsive p-0">
+                                <table id="dataTable" class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>

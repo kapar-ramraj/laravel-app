@@ -37,8 +37,8 @@
                                 <h3 class="card-title">Author List</h3>
                             </div>
                             <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="dataTable" class="table table-bordered table-striped">
+                            <div class="card-body table-responsive p-0">
+                                <table id="dataTable" class="table table-hover text-nowrap">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>
@@ -160,14 +160,20 @@
                             type: 'DELETE',
                             success: function(response) {
                                 if (response.success) {
+
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
                                         title: "Item has been deleted Successfully.",
+                                        color: "#d33",
                                         showConfirmButton: false,
-                                        timer: 1500
+                                        timer: 2000
                                     });
-                                    location.reload();
+
+                                    setTimeout(function() {
+                                        location.reload()
+                                    .fadeIn(); // Or .show()
+                                    }, 2000); // 2000 milliseconds = 2 seconds
                                 } else {
                                     Swal.fire({
                                         position: "top-end",
