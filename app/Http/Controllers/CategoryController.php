@@ -11,10 +11,10 @@ class CategoryController extends Controller
     // Display all categories
     public function index()
     {
-        $categories = $categories = Category::leftJoin('categories as parent', 'categories.parent_id', '=', 'parent.id')
-        ->select('categories.*', 'parent.name as parentName')
-        ->get();
-    
+        $categories = Category::leftJoin('categories as parent', 'categories.parent_id', '=', 'parent.id')
+            ->select('categories.*', 'parent.name as parentName')
+            ->get();
+
         // dd($categories);
         return view('library.categories.index', compact('categories'));
     }
@@ -23,7 +23,7 @@ class CategoryController extends Controller
     public function create()
     {
         $parentCategories = Category::whereNull('parent_id')->get();
-        return view('library.categories.create',compact('parentCategories'));
+        return view('library.categories.create', compact('parentCategories'));
     }
 
     // Store new category
@@ -50,7 +50,8 @@ class CategoryController extends Controller
     // Show form to edit category
     public function edit(Category $category)
     {
-        return view('library.categories.edit', compact('category'));
+        $parentCategories = Category::whereNull('parent_id')->get();
+        return view('library.categories.edit', compact('category', 'parentCategories'));
     }
 
     // Update category

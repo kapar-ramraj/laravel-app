@@ -21,26 +21,41 @@
 
                                 <div class="card-body">
                                     <div class="form-group">
-                                        <label for="exampleInputEmail1">First Name</label>
-                                        <input type="text" class="form-control" id="exampleInputEmail1"
-                                            placeholder="Enter First Name" name="fname" value="{{ $category->name }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Last Name</label>
-                                        <input type="text" class="form-control" id=""
-                                            placeholder="Enter Last Name" name="lname" value="{{ $category->lname }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Email</label>
-                                        <input type="email" class="form-control" id="" placeholder="Enter Email"
-                                            name="email" value="{{ $category->email }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="exampleInputEmail1">Phone</label>
-                                        <input type="number" class="form-control" id="" placeholder="Enter Phone"
-                                            name="phone" value="{{ $category->phone }}">
+                                        <label for="exampleInputEmail1">Name</label>
+                                        <input type="text" class="form-control" id="name"
+                                            placeholder="Enter Category Name" name="name" value="{{ old('name') ?? $category->name }}">
+                                        @error('name')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
                                     </div>
                                     
+                                    <div class="form-group">
+                                        <label for="parent_id">Parent Category</label>
+                                        <select  class="form-control" id="designation"
+                                             name="parent_id">
+                                        <option value="">Select Category</option>
+                                        @foreach ($parentCategories as $item)
+                                            <option value="{{$item->id}}" {{$category->parent_id == $item->id ? 'selected' : ''}}>{{$item->name}}</option>
+                                        @endforeach
+                                        </select>
+                                        @error('parent_id')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea name="description" class="form-control" id="" cols="30" rows="3">{{ old('description') ?? $category->description }}</textarea>
+                                            @error('description')
+                                            <p class="text-danger">
+                                                {{ $message }}
+                                            </p>
+                                        @enderror
+                                    </div>
 
                                 </div>
                                 <!-- /.card-body -->

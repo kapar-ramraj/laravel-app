@@ -64,24 +64,21 @@
                                                 <td>{{ $item->publisher_name }}</td>
                                                 <td>{{ $item->category_name }}</td>
                                                 <td>
-                                                    <a href="{{ asset('storage/' . $item->cover_image) }}" target="__blank">
-                                                        <img src="{{ asset('storage/' . $item->cover_image) }}" width="100px"
-                                                            alt="Photo">
+                                                    <a href="{{ asset('storage/' . $item->cover_image) }}"
+                                                        target="__blank">
+                                                        <img src="{{ asset('storage/' . $item->cover_image) }}"
+                                                            width="100px" alt="Photo">
                                                     </a>
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('books.edit', $item->id) }}"
                                                         class="btn btn-sm btn-primary"><i
                                                             class="fa-solid fa-pencil"></i></a>
-                                                    <form action="{{ route('books.destroy', $item->id) }}" method="POST"
-                                                        style="display: inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" onclick="return confirm('Are you sure?')"
-                                                            class="btn btn-sm btn-danger">
-                                                            <i class="fas fa-trash-alt"></i>
-                                                        </button>
-                                                    </form>
+
+                                                    <button type="button" class="btn btn-sm btn-danger delete-item"
+                                                        data-route="{{ route('books.destroy', $item->id) }}">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -91,10 +88,11 @@
                                     <tfoot>
                                         <tr>
                                             <th>S.N.</th>
-                                            <th>Name</th>
-                                            <th>Nationality</th>
-                                            <th>DOB</th>
-                                            <th>Death Date</th>
+                                            <th>Title</th>
+                                            <th>ISBN</th>
+                                            <th>Author</th>
+                                            <th>Publisher</th>
+                                            <th>Category</th>
                                             <th>photo</th>
                                             <th>Action</th>
                                         </tr>
@@ -137,15 +135,56 @@
                 "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
-            // $('#example2').DataTable({
-            //     "paging": true,
-            //     "lengthChange": false,
-            //     "searching": false,
-            //     "ordering": true,
-            //     "info": true,
-            //     "autoWidth": false,
-            //     "responsive": true,
-            // });
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $('.delete-item').on('click', function(e) {
+                let routeDelete = $(this).data('route');
+                Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this Item!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: routeDelete,
+                            type: 'DELETE',
+                            success: function(response) {
+                                if (response.success) {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Item has been deleted Successfully.",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                    location.reload();
+                                } else {
+                                    Swal.fire({
+                                        position: "top-end",
+                                        icon: "success",
+                                        title: "Failed to delete item..",
+                                        showConfirmButton: false,
+                                        timer: 1500
+                                    });
+                                }
+                            },
+                            error: function(xhr) {
+                                alert('Something went wrong.');
+                            }
+                        });
+                    }
+                });
+            })
         });
     </script>
 @endsection

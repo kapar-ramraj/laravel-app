@@ -9,6 +9,7 @@ use App\Models\Publisher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
@@ -20,7 +21,7 @@ class BookController extends Controller
         $items = Book::join('authors', 'authors.id', 'books.author_id')
             ->join('publishers', 'publishers.id', 'books.publisher_id')
             ->join('categories', 'categories.id', 'books.category_id')
-            ->select('books.*','authors.name as author_name','publishers.name as publisher_name','categories.name as category_name')
+            ->select('books.*', 'authors.name as author_name', 'publishers.name as publisher_name', 'categories.name as category_name')
             ->get();
         // dd($items);
         return view('library.book.index', compact('items'));
@@ -82,8 +83,11 @@ class BookController extends Controller
      */
     public function edit(Book $book)
     {
-        $countries = DB::table('countries')->get();
-        return view('library.book.edit', compact('countries', 'book'));
+        // dd($book->author->name);
+        $categories = Category::select('id', 'name')->get();
+        $authors = Author::select('id', 'name')->get();
+        $publishers = Publisher::select('id', 'name')->get();
+        return view('library.book.edit', compact('categories', 'authors', 'publishers', 'book'));
     }
 
     /**
@@ -92,29 +96,30 @@ class BookController extends Controller
     public function update(Request $request, Book $book)
     {
         $validateData =  $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'nationality' => ['integer', 'required'],
-            'birth_date' => ['string', 'required'],
-            'death_date' => ['nullable'],
-            'biography' => ['nullable'],
-            'photo' => ['required'],
+            'title' => ['required', 'string', 'max:255'],
+            'isbn' => ['required', 'max:255', Rule::unique('books')->ignore($book->id)],
+            'author_id' => ['integer', 'required'],
+            'publisher_id' => ['integer', 'required'],
+            'category_id' => ['integer', 'required'],
+            'publication_year' => ['integer', 'required'],
+            'quantity' => ['integer', 'required'],
+            'description' => ['nullable'],
+            'cover_image' => ['nullable']
         ]);
 
-
-        if ($request->photo) {
-            // Check if an old file exists and delete it
-            if (!empty($book['photo']) && Storage::disk('public')->exists($book['photo'])) {
-                Storage::disk('public')->delete($book['photo']);
+        // dd($validateData);
+        if ($request->cover_image) {
+            if (!empty($book['cover_image']) && Storage::disk('public')->exists($book['cover_image'])) {
+                Storage::disk('public')->delete($book['cover_image']);
             }
-            // Store new file in "storage/app/public/uploads"
-            $path = $request->file('photo')->store('uploads', 'public');
-            $validateData['photo'] = $path;
+            // Store file in "storage/app/public"
+            $path = $request->file('cover_image')->store('uploads', 'public');
+            $validateData['cover_image'] = $path;
         }
-
 
         // dd($validateData);
         $book->update($validateData);
-        return redirect()->route('books.index')->with('status', 'book data updated successfully.');
+        return redirect()->route('books.index')->with('status', 'Book data updated successfully.');
     }
 
     /**
@@ -122,10 +127,11 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        if (!empty($book['photo']) && Storage::disk('public')->exists($book['photo'])) {
-            Storage::disk('public')->delete($book['photo']);
+        if (!empty($book['cover_image']) && Storage::disk('public')->exists($book['cover_image'])) {
+            Storage::disk('public')->delete($book['cover_image']);
         }
         $book->delete();
-        return redirect()->route('books.index')->with('status', 'book data deleted successfully.');
+
+        return response()->json(['success' => true], 200);
     }
 }
