@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\BookLoanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PublisherController;
@@ -44,4 +45,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('authors', AuthorController::class);
 
     Route::resource('books', BookController::class);
+    Route::resource('book-loans', BookLoanController::class);
 });

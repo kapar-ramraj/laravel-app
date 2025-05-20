@@ -216,6 +216,32 @@
                     </ul>
                 </li>
 
+                <li class="nav-item">
+                    <a href="#" class="nav-link {{ Request::is('book-loans*') ? 'active' : '' }}">
+                        &nbsp;<i class="fas fa-book"></i>
+                        &nbsp;
+                        <p>
+                            Book Loans
+                            <i class="right fas fa-angle-left"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        <li class="nav-item">
+                            <a href="{{route('book-loans.index')}}" class="nav-link {{ Route::is('book-loans.index') ? 'active' : '' }}">
+                                &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp; 
+                                <p>Book loans List</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="{{route('book-loans.create')}}" class="nav-link {{ Route::is('book-loans.create') ? 'active' : '' }}"  >
+                                &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                <p>Create Book loans</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 {{-- @endif --}}
                 <li class="nav-item active">
                     <a href="{{route('student.profile')}}" class="nav-link">
