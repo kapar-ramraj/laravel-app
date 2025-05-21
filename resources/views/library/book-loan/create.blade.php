@@ -18,7 +18,7 @@
                                 <h3 class="card-title">Assign Book Loan</h3>
                             </div>
 
-                            @if ($errors->any())
+                            {{-- @if ($errors->any())
                                 <div class="alert alert-danger">
                                     <ul>
                                         @foreach ($errors->all() as $error)
@@ -26,7 +26,7 @@
                                         @endforeach
                                     </ul>
                                 </div>
-                            @endif
+                            @endif --}}
                             <!-- /.card-header -->
                             <!-- form start -->
                             <form method="POST" action="{{ route('book-loans.store') }}" class="mb-4"

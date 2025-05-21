@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\BookLoanController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\StudentController;
@@ -46,4 +47,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('books', BookController::class);
     Route::resource('book-loans', BookLoanController::class);
+
+    Route::get('/dashboard/first', [DashboardController::class, 'getDashboardFirst'])->name('dashboard.first');
+
 });

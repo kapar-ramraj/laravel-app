@@ -6,6 +6,7 @@ use App\Models\Author;
 use App\Models\Book;
 use App\Models\BookLoan;
 use App\Models\User;
+use App\Rules\BookLoanStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -40,8 +41,11 @@ class BookLoanController extends Controller
         // dd($request->all());
 
         $validateData =  $request->validate([
-
-            'book_id' => ['integer', 'required'],
+            'book_id' => [
+                'integer',
+                'required',
+                new BookLoanStatus($request->user_id, $request->status),
+            ],
             'user_id' => ['integer', 'required'],
             'loan_date' => ['date', 'required'],
             'due_date' => ['date', 'required'],
@@ -80,7 +84,11 @@ class BookLoanController extends Controller
     public function update(Request $request, BookLoan $bookLoan)
     {
         $validateData =  $request->validate([
-            'book_id' => ['integer', 'required'],
+            'book_id' => [
+                'integer',
+                'required',
+                new BookLoanStatus($request->user_id, $request->status),
+            ],
             'user_id' => ['integer', 'required'],
             'loan_date' => ['date', 'required'],
             'due_date' => ['date', 'required'],
