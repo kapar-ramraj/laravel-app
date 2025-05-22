@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::redirect('/', '/user/list');
+Route::redirect('/', '/dashboard/first');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {

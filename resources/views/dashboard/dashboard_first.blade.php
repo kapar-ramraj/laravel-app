@@ -108,14 +108,32 @@
                                     </thead>
                                     <tbody>
                                         @foreach ($books as $item)
+
+                                        @php
+                                            $bookStatusCount = App\Models\BookLoan::select(
+                                            'book_id',
+                                            \DB::raw('COUNT(CASE WHEN status = "borrowed" THEN 1 END) as status_borrowed'),
+                                            \DB::raw('COUNT(CASE WHEN status = "returned" THEN 1 END) as status_returned'),
+                                            \DB::raw('COUNT(CASE WHEN status = "overdue" THEN 1 END) as status_overdue')
+                                        )
+                                            ->where('book_id', $item->id)
+                                            ->groupBy('book_id')
+                                            ->first();
+                                            // dd($bookStatusCount);
+                                        @endphp
                                             <tr>
                                                 <td><a href="pages/examples/invoice.html">{{$item->isbn}}</a></td>
                                                 <td>{{$item->title}}</td>
                                                 <td>{{$item->quantity}}</td>
-                                                <td><span class="badge badge-success">{{$item->status}}</span></td>
                                                 <td>
-                                                    <div class="sparkbar" data-color="#00a65a" data-height="20">
-                                                        90,80,90,-70,61,-83,63</div>
+                                                    @if($bookStatusCount)
+                                                        <span class="badge badge-success">borrowed {{$bookStatusCount->status_borrowed}}</span>
+                                                        <span class="badge badge-success">Available {{$item->quantity - $bookStatusCount->status_borrowed - $bookStatusCount->status_overdue}}</span>
+                                                        <span class="badge badge-success">overdue {{$bookStatusCount->status_overdue}}</span>
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="" class="btn btn-sm btn-primary">view</a>
                                                 </td>
                                             </tr>
                                         @endforeach
