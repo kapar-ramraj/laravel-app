@@ -173,9 +173,10 @@
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
-                                        title: "Failed to delete item..",
+                                        title: response.message,
+                                        color: "#d33",
                                         showConfirmButton: false,
-                                        timer: 1500
+                                        timer: 5000
                                     });
                                 }
                             },

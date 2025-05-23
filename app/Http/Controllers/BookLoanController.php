@@ -106,7 +106,11 @@ class BookLoanController extends Controller
      */
     public function destroy(BookLoan $bookLoan)
     {
-        $bookLoan->delete();
-        return response()->json(['success' => true], 200);
+        if ($bookLoan->created_at->isToday()) {
+            $bookLoan->delete();
+            return response()->json(['success' => true], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => "you don't able to delete this record because it is older date."], 200);
+        }
     }
 }

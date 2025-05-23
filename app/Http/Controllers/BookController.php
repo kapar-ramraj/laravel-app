@@ -127,11 +127,15 @@ class BookController extends Controller
      */
     public function destroy(Book $book)
     {
-        if (!empty($book['cover_image']) && Storage::disk('public')->exists($book['cover_image'])) {
-            Storage::disk('public')->delete($book['cover_image']);
+        // dd($book->loans);
+        if (count($book->loans) > 0 ) {
+            return response()->json(['success' => false, 'message' => "You won't able to delete this book record because its related child records exists."], 200);
+        } else {
+            if (!empty($book['cover_image']) && Storage::disk('public')->exists($book['cover_image'])) {
+                Storage::disk('public')->delete($book['cover_image']);
+            }
+            $book->delete();
+            return response()->json(['success' => true], 200);
         }
-        $book->delete();
-
-        return response()->json(['success' => true], 200);
     }
 }

@@ -143,7 +143,7 @@
                 }
             });
 
-            $('.delete-item').on('click', function(e) {
+            $(document).on('click','.delete-item', function(e) {
                 let routeDelete = $(this).data('route');
                 Swal.fire({
                     title: "Are you sure?",
@@ -178,9 +178,10 @@
                                     Swal.fire({
                                         position: "top-end",
                                         icon: "success",
-                                        title: "Failed to delete item..",
+                                        title: response.message,
+                                        color: "#d33",
                                         showConfirmButton: false,
-                                        timer: 1500
+                                        timer: 5000
                                     });
                                 }
                             },
