@@ -17,9 +17,14 @@ class BookLoanController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $items = BookLoan::get();
+        // dd($request->all(), $request->book_id);
+        $query = BookLoan::query();
+        if ($request->book_id) {
+            $query->where('book_id', $request->book_id);
+        }
+        $items = $query->get();
         return view('library.book-loan.index', compact('items'));
     }
 
@@ -73,8 +78,10 @@ class BookLoanController extends Controller
      */
     public function edit(BookLoan $bookLoan)
     {
+        // dd($bookLoan);
         $books = Book::select('id', 'title')->get();
         $students = User::where('user_type', 'Student')->get();
+        // dd($students);
         return view('library.book-loan.edit', compact('books', 'students', 'bookLoan'));
     }
 

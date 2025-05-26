@@ -38,7 +38,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table id="dataTable" class="table table-hover text-nowrap">
+                                <table id="dataTable" class="table table-hover">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>
@@ -63,7 +63,7 @@
                                                 <td>{{ $item->loan_date }}</td>
                                                 <td>{{ $item->due_date }}</td>
                                                 <td>{{ $item->return_date }}</td>
-                                                <td>{{ $item->status }}</td>
+                                                <td> <span class="{{config('custom.loan_status_class')[$item->status]}}">{{ $item->status }}</span></td>
                                                 
                                                 <td>
                                                     <a href="{{ route('book-loans.edit', $item->id) }}"

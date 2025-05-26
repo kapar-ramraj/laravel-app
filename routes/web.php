@@ -19,6 +19,8 @@ Route::redirect('/', '/dashboard/first');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard/first', [DashboardController::class, 'getDashboardFirst'])->name('dashboard.first');
+
     Route::get('/user/list', [UserController::class, 'getUserList'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'getUserForm'])->name('user.create');
     Route::post('/user/store', [UserController::class, 'storeUser']);
@@ -48,6 +50,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('books', BookController::class);
     Route::resource('book-loans', BookLoanController::class);
 
-    Route::get('/dashboard/first', [DashboardController::class, 'getDashboardFirst'])->name('dashboard.first');
 
 });

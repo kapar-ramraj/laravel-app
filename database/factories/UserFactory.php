@@ -27,7 +27,7 @@ class UserFactory extends Factory
             'fname' => $this->faker->firstName,
             'lname' => $this->faker->lastName,
             'email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->optional()->phoneNumber,
+            'phone' => $this->faker->unique()->phoneNumber,
             'profile' => $this->faker->optional()->imageUrl(200, 200, 'people'),
             'user_type' => $this->faker->randomElement(['Student', 'Teacher', 'Admin']),
             'email_verified_at' => $this->faker->optional()->dateTimeThisYear(),
