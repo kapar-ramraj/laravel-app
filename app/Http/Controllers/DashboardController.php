@@ -23,6 +23,8 @@ class DashboardController extends Controller
 
         $books = Book::all();
 
+        $students = User::where('user_type', 'Student')->get();
+
         // $bookLoanCounts = BookLoan::select(
         //     'book_id',
         //     DB::raw('COUNT(CASE WHEN status = "borrowed" THEN 1 END) as status_borrowed'),
@@ -33,6 +35,6 @@ class DashboardController extends Controller
         //     ->groupBy('book_id')
         //     ->first();
         // dd($bookLoanCounts );
-        return view('dashboard.dashboard_first', compact('totalStudents', 'totalCategories', 'totalAuthor', 'totalPublisher', 'totalNoOfDifferentBooks', 'books'));
+        return view('dashboard.dashboard_first', compact('totalStudents', 'totalCategories', 'totalAuthor', 'totalPublisher', 'totalNoOfDifferentBooks', 'books','students'));
     }
 }

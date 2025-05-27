@@ -38,7 +38,7 @@
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table id="dataTable" class="table table-hover text-nowrap">
+                                <table id="dataTable" class="table table-hover text-wrap">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>
@@ -48,6 +48,7 @@
                                             <th>Publisher</th>
                                             <th>Category</th>
                                             <th>photo</th>
+                                            <th>Quantity</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
@@ -70,6 +71,7 @@
                                                             width="100px" alt="Photo">
                                                     </a>
                                                 </td>
+                                                <td>{{ $item->quantity }}</td>
                                                 <td>
                                                     <a href="{{ route('books.edit', $item->id) }}"
                                                         class="btn btn-sm btn-primary"><i
@@ -94,6 +96,7 @@
                                             <th>Publisher</th>
                                             <th>Category</th>
                                             <th>photo</th>
+                                            <th>Quantity</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>

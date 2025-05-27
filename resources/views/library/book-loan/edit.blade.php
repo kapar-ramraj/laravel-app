@@ -24,6 +24,7 @@
                                 @csrf
                                 @method('PUT')
 
+                                <input type="hidden" name="queryString" value="{{request()->getQueryString()}}">
                                 <!-- /.card-body -->
                                 <div class="card-body">
                                     <div class="form-group">

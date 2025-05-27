@@ -24,6 +24,11 @@ class BookLoanController extends Controller
         if ($request->book_id) {
             $query->where('book_id', $request->book_id);
         }
+
+        if ($request->user_id) {
+            $query->where('user_id', $request->user_id);
+        }
+
         $items = $query->get();
         return view('library.book-loan.index', compact('items'));
     }
@@ -76,7 +81,7 @@ class BookLoanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BookLoan $bookLoan)
+    public function edit(BookLoan $bookLoan, Request $request)
     {
         // dd($bookLoan);
         $books = Book::select('id', 'title')->get();
@@ -90,6 +95,7 @@ class BookLoanController extends Controller
      */
     public function update(Request $request, BookLoan $bookLoan)
     {
+        // dd($request->all());
         $validateData =  $request->validate([
             'book_id' => [
                 'integer',
@@ -105,7 +111,7 @@ class BookLoanController extends Controller
         ]);
 
         $bookLoan->update($validateData);
-        return redirect()->route('book-loans.index')->with('status', 'Book data updated successfully.');
+        return redirect('book-loans'.'?'.$request->queryString)->with('status', 'Book data updated successfully.');
     }
 
     /**

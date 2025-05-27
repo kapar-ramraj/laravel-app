@@ -54,6 +54,8 @@
                                     <tbody>
                                         @php
                                             $sn = 1;
+                                            $queryString = request()->getQueryString(); // returns "category=books&user_id=5"
+                                            // dd($queryString);
                                         @endphp
                                         @foreach ($items as $item)
                                             <tr>
@@ -63,10 +65,12 @@
                                                 <td>{{ $item->loan_date }}</td>
                                                 <td>{{ $item->due_date }}</td>
                                                 <td>{{ $item->return_date }}</td>
-                                                <td> <span class="{{config('custom.loan_status_class')[$item->status]}}">{{ $item->status }}</span></td>
-                                                
+                                                <td> <span
+                                                        class="{{ config('custom.loan_status_class')[$item->status] }}">{{ $item->status }}</span>
+                                                </td>
+
                                                 <td>
-                                                    <a href="{{ route('book-loans.edit', $item->id) }}"
+                                                    <a href="{{ route('book-loans.edit', $item->id) }}{{ $queryString ? '?' . $queryString : '' }}"
                                                         class="btn btn-sm btn-primary"><i
                                                             class="fa-solid fa-pencil"></i></a>
 
@@ -167,7 +171,7 @@
 
                                     setTimeout(function() {
                                         location.reload()
-                                    .fadeIn(); // Or .show()
+                                            .fadeIn(); // Or .show()
                                     }, 2000); // 2000 milliseconds = 2 seconds
                                 } else {
                                     Swal.fire({

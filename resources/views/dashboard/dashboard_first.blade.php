@@ -85,7 +85,7 @@
                 </div>
 
                 <!-- Main row -->
-                <div class="row mt-2">
+                <div class="row mt-4">
                     <!-- TABLE: LATEST ORDERS -->
                     <div class="card col-md-12">
                         <div class="card-header border-transparent">
@@ -153,6 +153,74 @@
                     </div>
                     <!-- /.card -->
                 </div>
+
+                <div class="row mt-4">
+                    <!-- TABLE: LATEST ORDERS -->
+                    <div class="card col-md-12">
+                        <div class="card-header border-transparent">
+                            <h3 class="card-title">Total Number of Students : {{ $totalStudents }}</h3>
+
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table m-0" id="studentTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Student Name</th>
+                                            <th>No. Of Books</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($students as $item)
+
+                                        @php
+                                            $studentStatusCount = App\Models\BookLoan::select(
+                                            'user_id',
+                                            \DB::raw('COUNT(CASE WHEN status = "borrowed" THEN 1 END) as status_borrowed'),
+                                            \DB::raw('COUNT(CASE WHEN status = "returned" THEN 1 END) as status_returned'),
+                                            \DB::raw('COUNT(CASE WHEN status = "overdue" THEN 1 END) as status_overdue')
+                                        )
+                                            ->where('user_id', $item->id)
+                                            ->groupBy('user_id')
+                                            ->first();
+                                            // dd($studentStatusCount);
+                                        @endphp
+                                            <tr>
+                                                <td>{{$item->name}}</td>
+                                                <td>{{config('custom.student_can_take_books')}}</td>
+                                                <td>
+                                                    @if($studentStatusCount)
+                                                        <span class="badge badge-primary">borrowed {{$studentStatusCount->status_borrowed}}</span>
+                                                        <span class="badge badge-danger">overdue {{$studentStatusCount->status_overdue}}</span>
+                                                        <span class="badge badge-success">Available {{config('custom.student_can_take_books') - $studentStatusCount->status_borrowed - $studentStatusCount->status_overdue}}</span>
+
+                                                    @endif
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('book-loans.index').'?user_id='.$item->id}}" class="btn btn-sm btn-primary">view</a>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
             </div>
         </section>
     </div>
@@ -182,6 +250,13 @@
                 "autoWidth": false,
                 "buttons": ["csv", "excel", "colvis"]
             }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+
+            $("#studentTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "buttons": ["csv", "excel", "colvis"]
+            }).buttons().container().appendTo('#studentTable_wrapper .col-md-6:eq(0)');
 
             $.ajaxSetup({
                 headers: {
