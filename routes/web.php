@@ -6,7 +6,9 @@ use App\Http\Controllers\BookLoanController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PublisherController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -15,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
-Route::redirect('/', '/dashboard/first');
+Route::redirect('/', '/login');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard/first', [DashboardController::class, 'getDashboardFirst'])->name('dashboard.first');
+    Route::get('/dashboard/first', [DashboardController::class, 'getDashboardFirst'])->name('dashboard.first')->middleware('permission:dashboard-list');
 
     Route::get('/user/list', [UserController::class, 'getUserList'])->name('user.index');
     Route::get('/user/create', [UserController::class, 'getUserForm'])->name('user.create');
@@ -49,6 +51,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('books', BookController::class);
     Route::resource('book-loans', BookLoanController::class);
+    Route::resource('permissions', PermissionController::class);
 
+    Route::resource('roles', RoleController::class);
 
+    Route::get('/change/password', [UserController::class, 'changePassword'])->name('change.password');
+    Route::post('/change/password', [UserController::class, 'updatePassword'])->name('change.password');
 });

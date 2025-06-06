@@ -1,5 +1,15 @@
 @extends('layouts.master')
+@section('title')
+    Student Profile
+@endsection
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('plugins/fontawesome-free/css/all.min.css') }}">
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-responsive/css/responsive.bootstrap4.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/datatables-buttons/css/buttons.bootstrap4.min.css') }}">
+@endsection
 @section('content')
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
@@ -31,7 +41,7 @@
                             <div class="card-body box-profile">
                                 <div class="text-center">
                                     <img class="profile-user-img img-fluid img-circle"
-                                        src="{{asset('storage/' . $user->profile)}}" alt="User profile picture">
+                                        src="{{ asset('storage/' . $user->profile) }}" alt="User profile picture">
                                 </div>
 
                                 <h3 class="profile-username text-center">{{ $user->fname . ' ' . $user->lname }}</h3>
@@ -40,17 +50,17 @@
 
                                 <ul class="list-group list-group-unbordered mb-3">
                                     <li class="list-group-item">
-                                        <b>Followers</b> <a class="float-right">1,322</a>
+                                        <b>Overdue</b> <a class="float-right bg-danger p-1">{{ $authUserBookStatus->status_overdue ?? '' }}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Following</b> <a class="float-right">543</a>
+                                        <b>Borrowed</b> <a class="float-right bg-primary p-1">{{ $authUserBookStatus->status_borrowed ?? '' }}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>Friends</b> <a class="float-right">13,287</a>
+                                        <b>Available</b> <a class="float-right bg-success p-1">{{config('custom.student_can_take_books') - ( $authUserBookStatus->status_overdue ?? 0) - ($authUserBookStatus->status_borrowed ?? 0)}}</a>
                                     </li>
                                 </ul>
 
-                                <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>
+                                {{-- <a href="#" class="btn btn-primary btn-block"><b>Follow</b></a> --}}
                             </div>
                             <!-- /.card-body -->
                         </div>
@@ -66,7 +76,7 @@
                             <div class="card-header p-2">
                                 <ul class="nav nav-pills">
                                     <li class="nav-item"><a class="nav-link active" href="#activity"
-                                            data-toggle="tab">Activity</a></li>
+                                            data-toggle="tab">Book Loan Details</a></li>
                                     <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a>
                                     </li>
                                     <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Edit
@@ -78,131 +88,56 @@
                                 <div class="tab-content">
                                     <div class="active tab-pane" id="activity">
                                         <!-- Post -->
-                                        <div class="post">
-                                            <div class="user-block">
-                                                <img class="img-circle img-bordered-sm"
-                                                    src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                                <span class="username">
-                                                    <a href="#">Jonathan Burke Jr.</a>
-                                                    <a href="#" class="float-right btn-tool"><i
-                                                            class="fas fa-times"></i></a>
-                                                </span>
-                                                <span class="description">Shared publicly - 7:30 PM today</span>
-                                            </div>
-                                            <!-- /.user-block -->
-                                            <p>
-                                                Lorem ipsum represents a long-held tradition for designers,
-                                                typographers and the like. Some people hate it and argue for
-                                                its demise, but others ignore the hate as they create awesome
-                                                tools to help create filler text for everyone from bacon lovers
-                                                to Charlie Sheen fans.
-                                            </p>
+                                        <div class="card-body table-responsive p-0">
+                                            <table id="dataTable" class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>S.N.</th>
+                                                        <th>Book Title</th>
+                                                        <th>Book Photo</th>
+                                                        <th>Loan Date</th>
+                                                        <th>Due Date</th>
+                                                        <th>Return Date</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @php
+                                                        $sn = 1;
+                                                        $queryString = request()->getQueryString(); // returns "category=books&user_id=5"
+                                                        // dd($queryString);
+                                                    @endphp
+                                                    @foreach ($bookLoans as $item)
+                                                        <tr>
+                                                            <td>{{ $sn++ }}</td>
+                                                            <td>{{ $item->book->title ?? '' }}</td>
+                                                            <td>
+                                                                <img src="{{asset('storage/'.$item->book->cover_image)}}" alt="Book cover" width="100px">
+                                                            </td>
+                                                            <td>{{ $item->loan_date }}</td>
+                                                            <td>{{ $item->due_date }}</td>
+                                                            <td>{{ $item->return_date }}</td>
+                                                            <td> <span
+                                                                    class="{{ config('custom.loan_status_class')[$item->status] }}">{{ $item->status }}</span>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
 
-                                            <p>
-                                                <a href="#" class="link-black text-sm mr-2"><i
-                                                        class="fas fa-share mr-1"></i> Share</a>
-                                                <a href="#" class="link-black text-sm"><i
-                                                        class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                <span class="float-right">
-                                                    <a href="#" class="link-black text-sm">
-                                                        <i class="far fa-comments mr-1"></i> Comments (5)
-                                                    </a>
-                                                </span>
-                                            </p>
+                                                </tbody>
 
-                                            <input class="form-control form-control-sm" type="text"
-                                                placeholder="Type a comment">
-                                        </div>
-                                        <!-- /.post -->
-
-                                        <!-- Post -->
-                                        <div class="post clearfix">
-                                            <div class="user-block">
-                                                <img class="img-circle img-bordered-sm"
-                                                    src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                                                <span class="username">
-                                                    <a href="#">Sarah Ross</a>
-                                                    <a href="#" class="float-right btn-tool"><i
-                                                            class="fas fa-times"></i></a>
-                                                </span>
-                                                <span class="description">Sent you a message - 3 days ago</span>
-                                            </div>
-                                            <!-- /.user-block -->
-                                            <p>
-                                                Lorem ipsum represents a long-held tradition for designers,
-                                                typographers and the like. Some people hate it and argue for
-                                                its demise, but others ignore the hate as they create awesome
-                                                tools to help create filler text for everyone from bacon lovers
-                                                to Charlie Sheen fans.
-                                            </p>
-
-                                            <form class="form-horizontal">
-                                                <div class="input-group input-group-sm mb-0">
-                                                    <input class="form-control form-control-sm" placeholder="Response">
-                                                    <div class="input-group-append">
-                                                        <button type="submit" class="btn btn-danger">Send</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                        <!-- /.post -->
-
-                                        <!-- Post -->
-                                        <div class="post">
-                                            <div class="user-block">
-                                                <img class="img-circle img-bordered-sm"
-                                                    src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                                                <span class="username">
-                                                    <a href="#">Adam Jones</a>
-                                                    <a href="#" class="float-right btn-tool"><i
-                                                            class="fas fa-times"></i></a>
-                                                </span>
-                                                <span class="description">Posted 5 photos - 5 days ago</span>
-                                            </div>
-                                            <!-- /.user-block -->
-                                            <div class="row mb-3">
-                                                <div class="col-sm-6">
-                                                    <img class="img-fluid" src="../../dist/img/photo1.png"
-                                                        alt="Photo">
-                                                </div>
-                                                <!-- /.col -->
-                                                <div class="col-sm-6">
-                                                    <div class="row">
-                                                        <div class="col-sm-6">
-                                                            <img class="img-fluid mb-3" src="../../dist/img/photo2.png"
-                                                                alt="Photo">
-                                                            <img class="img-fluid" src="../../dist/img/photo3.jpg"
-                                                                alt="Photo">
-                                                        </div>
-                                                        <!-- /.col -->
-                                                        <div class="col-sm-6">
-                                                            <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg"
-                                                                alt="Photo">
-                                                            <img class="img-fluid" src="../../dist/img/photo1.png"
-                                                                alt="Photo">
-                                                        </div>
-                                                        <!-- /.col -->
-                                                    </div>
-                                                    <!-- /.row -->
-                                                </div>
-                                                <!-- /.col -->
-                                            </div>
-                                            <!-- /.row -->
-
-                                            <p>
-                                                <a href="#" class="link-black text-sm mr-2"><i
-                                                        class="fas fa-share mr-1"></i> Share</a>
-                                                <a href="#" class="link-black text-sm"><i
-                                                        class="far fa-thumbs-up mr-1"></i> Like</a>
-                                                <span class="float-right">
-                                                    <a href="#" class="link-black text-sm">
-                                                        <i class="far fa-comments mr-1"></i> Comments (5)
-                                                    </a>
-                                                </span>
-                                            </p>
-
-                                            <input class="form-control form-control-sm" type="text"
-                                                placeholder="Type a comment">
+                                                <tfoot>
+                                                    <tr>
+                                                        <th>S.N.</th>
+                                                        <th>Student Name</th>
+                                                        <th>Book Title</th>
+                                                        <th>Loan Date</th>
+                                                        <th>Due Date</th>
+                                                        <th>Return Date</th>
+                                                        <th>Status</th>
+                                                        <th>Action</th>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
                                         </div>
                                         <!-- /.post -->
                                     </div>
@@ -309,13 +244,15 @@
                                     <!-- /.tab-pane -->
 
                                     <div class="tab-pane" id="settings">
-                                        <form method="POST" action="{{route('student.profile.update')}}" class="form-horizontal" enctype="multipart/form-data">
+                                        <form method="POST" action="{{ route('student.profile.update') }}"
+                                            class="form-horizontal" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group row">
                                                 <label for="inputName" class="col-sm-2 col-form-label">First Name</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="fName"
-                                                        placeholder="First Name Name" name="fname" value="{{$user->fname}}">
+                                                        placeholder="First Name Name" name="fname"
+                                                        value="{{ $user->fname }}">
                                                 </div>
                                             </div>
 
@@ -323,7 +260,8 @@
                                                 <label for="inputName" class="col-sm-2 col-form-label">Last Name</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="lName"
-                                                        placeholder="Last Name" name="lname" value="{{$user->lname}}">
+                                                        placeholder="Last Name" name="lname"
+                                                        value="{{ $user->lname }}">
                                                 </div>
                                             </div>
 
@@ -331,30 +269,34 @@
                                                 <label for="inputName" class="col-sm-2 col-form-label">Phone</label>
                                                 <div class="col-sm-10">
                                                     <input type="text" class="form-control" id="phone"
-                                                        placeholder="Phone" name="phone" value="{{auth()->user()->phone}}">
+                                                        placeholder="Phone" name="phone"
+                                                        value="{{ auth()->user()->phone }}">
                                                 </div>
                                             </div>
                                             <div class="form-group row">
                                                 <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
                                                 <div class="col-sm-10">
                                                     <input type="email" class="form-control" id="inputEmail"
-                                                        placeholder="Email" name="emaile" value="{{$user->email}}">
+                                                        placeholder="Email" name="emaile" value="{{ $user->email }}">
                                                 </div>
                                             </div>
 
                                             <div class="form-group row">
-                                              <label for="inputEmail" class="col-sm-2 col-form-label">Profile Image</label>
-                                              <div class="input-group col-sm-10">
-                                                <div class="custom-file">
-                                                  <input type="file" class="custom-file-input" id="exampleInputFile" name="student_profile">
-                                                  <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                <label for="inputEmail" class="col-sm-2 col-form-label">Profile
+                                                    Image</label>
+                                                <div class="input-group col-sm-10">
+                                                    <div class="custom-file">
+                                                        <input type="file" class="custom-file-input"
+                                                            id="exampleInputFile" name="student_profile">
+                                                        <label class="custom-file-label" for="exampleInputFile">Choose
+                                                            file</label>
+                                                    </div>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">Upload</span>
+                                                    </div>
                                                 </div>
-                                                <div class="input-group-append">
-                                                  <span class="input-group-text">Upload</span>
-                                                </div>
-                                              </div>
-                                          </div>
-                                            
+                                            </div>
+
                                             <div class="form-group row">
                                                 <label for="inputExperience"
                                                     class="col-sm-2 col-form-label">Experience</label>
@@ -369,7 +311,7 @@
                                                         placeholder="Skills">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="form-group row">
                                                 <div class="offset-sm-2 col-sm-10">
                                                     <button type="submit" class="btn btn-danger">Submit</button>
@@ -392,4 +334,39 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+@endsection
+@section('scripts')
+    <!-- DataTables  & Plugins -->
+    <script src="{{ asset('plugins/datatables/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/dataTables.responsive.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js') }}"></script>
+    <script src="{{ asset('plugins/jszip/jszip.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('plugins/pdfmake/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.print.min.js') }}"></script>
+    <script src="{{ asset('plugins/datatables-buttons/js/buttons.colVis.min.js') }}"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function() {
+            $("#dataTable").DataTable({
+                "responsive": true,
+                "lengthChange": true,
+                "autoWidth": false,
+                "buttons": ["csv", "excel", "colvis"]
+            }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            
+        });
+    </script>
 @endsection

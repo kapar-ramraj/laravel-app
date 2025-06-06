@@ -13,6 +13,13 @@ use Illuminate\Validation\Rule;
 
 class BookController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:book-list', ['only' => ['index', 'show']]);
+        $this->middleware('permission:book-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:book-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:book-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -128,7 +135,7 @@ class BookController extends Controller
     public function destroy(Book $book)
     {
         // dd($book->loans);
-        if (count($book->loans) > 0 ) {
+        if (count($book->loans) > 0) {
             return response()->json(['success' => false, 'message' => "You won't able to delete this book record because its related child records exists."], 200);
         } else {
             if (!empty($book['cover_image']) && Storage::disk('public')->exists($book['cover_image'])) {

@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Author List
+    Book List
 @endsection
 
 @section('styles')
@@ -34,7 +34,7 @@
                                     </div>
                                 @endif
 
-                                <h3 class="card-title">Author List</h3>
+                                <h3 class="card-title">Book List</h3>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">

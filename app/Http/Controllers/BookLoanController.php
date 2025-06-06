@@ -14,6 +14,13 @@ use Illuminate\Validation\Rule;
 
 class BookLoanController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('permission:bookloan-list', ['only' => ['index','show']]);
+        $this->middleware('permission:bookloan-create', ['only' => ['create', 'store']]);
+        $this->middleware('permission:bookloan-edit', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:bookloan-delete', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */

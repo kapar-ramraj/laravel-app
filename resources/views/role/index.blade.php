@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Book Loan List
+    Role List
 @endsection
 
 @section('styles')
@@ -34,51 +34,36 @@
                                     </div>
                                 @endif
 
-                                <h3 class="card-title">Book Loan List</h3>
+                                <h3 class="card-title">Role List</h3>
+                                <a href="{{route('roles.create')}}" class="btn btn-primary float-right" >
+                                    Create Role
+                                </a>
                             </div>
                             <!-- /.card-header -->
                             <div class="card-body table-responsive p-0">
-                                <table id="dataTable" class="table table-hover">
+                                <table id="dataTable" class="table table-hover text-wrap">
                                     <thead>
                                         <tr>
                                             <th>S.N.</th>
-                                            <th>Student Name</th>
-                                            <th>Book Title</th>
-                                            <th>Loan Date</th>
-                                            <th>Due Date</th>
-                                            <th>Return Date</th>
-                                            <th>Status</th>
+                                            <th>Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
                                             $sn = 1;
-                                            $queryString = request()->getQueryString(); // returns "category=books&user_id=5"
-                                            // dd($queryString);
                                         @endphp
-                                        @foreach ($items as $item)
+                                        @foreach ($roles as $item)
                                             <tr>
                                                 <td>{{ $sn++ }}</td>
-                                                <td>{{ $item->user->name ?? '' }}</td>
-                                                <td>{{ $item->book->title ?? '' }}</td>
-                                                <td>{{ $item->loan_date }}</td>
-                                                <td>{{ $item->due_date }}</td>
-                                                <td>{{ $item->return_date }}</td>
-                                                <td> <span
-                                                        class="{{ config('custom.loan_status_class')[$item->status] }}">{{ $item->status }}</span>
-                                                </td>
-
+                                                <td>{{ $item->name }}</td>
                                                 <td>
-                                                    <a href="{{ route('book-loans.edit', $item->id) }}{{ $queryString ? '?' . $queryString : '' }}"
-                                                        class="btn btn-sm btn-primary"><i
-                                                            class="fa-solid fa-pencil"></i></a>
-
-                                                    <button type="button" class="btn btn-sm btn-danger delete-item"
-                                                        data-route="{{ route('book-loans.destroy', $item->id) }}">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
+                                                    <a href="{{ route('roles.edit', $item->id) }}"
+                                                        class="btn btn-sm btn-primary" >
+                                                        <i class="fa-solid fa-pencil"></i>
+                                                    </a>
                                                 </td>
+
                                             </tr>
                                         @endforeach
 
@@ -87,12 +72,7 @@
                                     <tfoot>
                                         <tr>
                                             <th>S.N.</th>
-                                            <th>Student Name</th>
-                                            <th>Book Title</th>
-                                            <th>Loan Date</th>
-                                            <th>Due Date</th>
-                                            <th>Return Date</th>
-                                            <th>Status</th>
+                                            <th>Name</th>
                                             <th>Action</th>
                                         </tr>
                                     </tfoot>
@@ -108,7 +88,7 @@
             </div>
         </section>
     </div>
-    <!-- /.card -->
+
 @endsection
 
 @section('scripts')
@@ -132,7 +112,7 @@
                 "responsive": true,
                 "lengthChange": true,
                 "autoWidth": false,
-                "buttons": ["csv", "excel", "colvis"]
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#dataTable_wrapper .col-md-6:eq(0)');
 
 
@@ -142,7 +122,7 @@
                 }
             });
 
-            $('.delete-item').on('click', function(e) {
+            $(document).on('click', '.delete-item', function(e) {
                 let routeDelete = $(this).data('route');
                 Swal.fire({
                     title: "Are you sure?",
