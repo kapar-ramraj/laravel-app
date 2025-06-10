@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
+use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,24 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('frontend.home.index');
+    }
+
+    public function aboutUs()
+    {
+        $books = Book::all()->count();
+        $students = User::where('user_type','Student')->get()->count();
+        $authors = Author::all()->count();
+        return view('frontend.home.aboutus', compact('books','students','authors'));
+    }
+
+    public function getBooks()
+    {
+        return view('frontend.home.books');
+    }
+
+    public function getAuthors()
+    {
+        return view('frontend.home.authors');
     }
 }
