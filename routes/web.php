@@ -26,6 +26,7 @@ Route::get('/about-us', [HomeController::class, 'aboutUs'])->name('page.aboutus'
 Route::get('/books-detail', [HomeController::class, 'getBooks'])->name('page.books');
 Route::get('/authors-detail', [HomeController::class, 'getAuthors'])->name('page.authors');
 Route::get('/events', [HomeController::class, 'getEvents'])->name('page.events');
+Route::get('/contact-us', [HomeController::class, 'getContactUs'])->name('page.contactus');
 
 
 

@@ -9,11 +9,11 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="{{url('/')}}" class="active">Home<br></a></li>
-          <li><a href="{{route('page.aboutus')}}">About</a></li>
-          <li><a href="{{route('page.books')}}">Books</a></li>
-          <li><a href="{{route('page.authors')}}">Authors</a></li>
-          <li><a href="{{route('page.events')}}">Events</a></li>
+          <li><a href="{{url('/')}}" class="{{ request()->path() == '/' ? 'active' : ''}}">Home<br></a></li>
+          <li><a href="{{route('page.aboutus')}}" class="{{ request()->path() == 'about-us' ? 'active' : ''}}">About</a></li>
+          <li><a href="{{route('page.books')}}" class="{{ request()->path() == 'books-detail' ? 'active' : ''}}">Books</a></li>
+          <li><a href="{{route('page.authors')}}" class="{{ request()->path() == 'authors-detail' ? 'active' : ''}}">Authors</a></li>
+          <li><a href="{{route('page.events')}}" class="{{ request()->path() == 'events' ? 'active' : ''}}">Events</a></li>
           <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -31,7 +31,7 @@
               <li><a href="#">Dropdown 4</a></li>
             </ul>
           </li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="{{route('page.contactus')}}">Contact Us</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>

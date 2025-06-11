@@ -8,19 +8,50 @@
   <main class="main">
 
     <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
+{{--    <section id="hero" class="hero section dark-background">
 
-      <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
-
+    <img src="assets/img/hero-bg.jpg" alt="" data-aos="fade-in">
       <div class="container">
         <h2 data-aos="fade-up" data-aos-delay="100">Learning Today,<br>Leading Tomorrow</h2>
         <p data-aos="fade-up" data-aos-delay="200">We are team of talented designers making websites with Bootstrap</p>
         <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
           <a href="courses.html" class="btn-get-started">Get Started</a>
         </div>
-      </div>
+      </div> 
 
-    </section><!-- /Hero Section -->
+    </section> --}}
+
+  <!-- Carousel -->
+  <div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+    <!-- Indicators/dots -->
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+      <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+    </div>
+    
+    <!-- The slideshow/carousel -->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="https://www.w3schools.com/bootstrap5/la.jpg" alt="Los Angeles" class="d-block" style="width:100%">
+      </div>
+      <div class="carousel-item">
+        <img src="https://www.w3schools.com/bootstrap5/chicago.jpg" alt="Chicago" class="d-block" style="width:100%">
+      </div>
+      <div class="carousel-item">
+        <img src="https://www.w3schools.com/bootstrap5/ny.jpg" alt="New York" class="d-block" style="width:100%">
+      </div>
+    </div>
+    
+    <!-- Left and right controls/icons -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
 
     <!-- About Section -->
     <section id="about" class="about section">
@@ -34,16 +65,25 @@
           </div>
 
           <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
-            <h3>Voluptatem dignissimos provident quasi corporis</h3>
+            <h3>Our Mission</h3>
             <p class="fst-italic">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-              magna aliqua.
+              To empower libraries with innovative digital tools that simplify operations, enhance user
+                            engagement, and promote a love for reading and learning in the digital age.
             </p>
             <ul>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
-              <li><i class="bi bi-check-circle"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
-            </ul>
+              <li><i class="bi bi-check-circle"></i> <span>Smart Cataloging: Easily manage and search book
+                                    collections using advanced filters and categorization.</span></li>
+                            <li><i class="bi bi-check-circle"></i> <span>Seamless Borrow & Return: Track and manage
+                                    borrowings in real-time with notifications and history logs.</span></li>
+                            <li><i class="bi bi-check-circle"></i> <span>Member Management: Keep member profiles, lending
+                                    history, and fines well organized.</span></li>
+                            <li><i class="bi bi-check-circle"></i> <span>
+                            Reports & Analytics: Gain insights into library usage, popular titles, overdue items, and more.    
+                            </span></li>
+                            <li><i class="bi bi-check-circle"></i> <span>
+                            Mobile Access: Access the library anytime, anywhere with our responsive interface.    
+                            </span></li>
+                          </ul>
             <a href="#" class="read-more"><span>Read More</span><i class="bi bi-arrow-right"></i></a>
           </div>
 
@@ -62,15 +102,15 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1" class="purecounter"></span>
+              <span data-purecounter-start="0" data-purecounter-end="{{$students}}" data-purecounter-duration="1" class="purecounter"></span>
               <p>Students</p>
             </div>
           </div><!-- End Stats Item -->
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Courses</p>
+              <span data-purecounter-start="0" data-purecounter-end="{{$books}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Books</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -83,8 +123,8 @@
 
           <div class="col-lg-3 col-md-6">
             <div class="stats-item text-center w-100 h-100">
-              <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1" class="purecounter"></span>
-              <p>Trainers</p>
+              <span data-purecounter-start="0" data-purecounter-end="{{$authors}}" data-purecounter-duration="1" class="purecounter"></span>
+              <p>Authors</p>
             </div>
           </div><!-- End Stats Item -->
 
@@ -252,15 +292,42 @@
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <h2>Courses</h2>
-        <p>Popular Courses</p>
+        <h2>Books</h2>
+        <p>Popular Books</p>
       </div><!-- End Section Title -->
 
       <div class="container">
 
         <div class="row">
+          @foreach ($popularBooks as $item)
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+            <div class="course-item">
+              <img src="{{asset('storage/'.$item->cover_image)}}" class="img-fluid" alt="...">
+              <div class="course-content">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                  <p class="category">{{$item->title}}</p>
+                  <p class="price">Total : {{$item->quantity}}</p>
+                </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <h3><a href="course-details.html">{{$item->isbn}}</a></h3>
+                <p class="description">{{$item->description}}</p>
+                <div class="trainer d-flex justify-content-between align-items-center">
+                  <div class="trainer-profile d-flex align-items-center">
+                    <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                    <a href="" class="trainer-link">Antonio</a>
+                  </div>
+                  <div class="trainer-rank d-flex align-items-center">
+                    <i class="bi bi-person user-icon"></i>&nbsp;50
+                    &nbsp;&nbsp;
+                    <i class="bi bi-heart heart-icon"></i>&nbsp;65
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> <!-- End Course Item-->
+          @endforeach
+
+          {{-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
             <div class="course-item">
               <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
               <div class="course-content">
@@ -336,7 +403,7 @@
                 </div>
               </div>
             </div>
-          </div> <!-- End Course Item-->
+          </div> <!-- End Course Item--> --}}
 
         </div>
 

@@ -26,15 +26,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('frontend.home.index');
+        $books = Book::all()->count();
+        $students = User::where('user_type', 'Student')->get()->count();
+        $authors = Author::all()->count();
+        $popularBooks = Book::inRandomOrder()->take(3)->get();
+        return view('frontend.home.index', compact('books', 'students', 'authors','popularBooks'));
     }
 
     public function aboutUs()
     {
         $books = Book::all()->count();
-        $students = User::where('user_type','Student')->get()->count();
+        $students = User::where('user_type', 'Student')->get()->count();
         $authors = Author::all()->count();
-        return view('frontend.home.aboutus', compact('books','students','authors'));
+        return view('frontend.home.aboutus', compact('books', 'students', 'authors'));
     }
 
     public function getBooks()
@@ -45,5 +49,15 @@ class HomeController extends Controller
     public function getAuthors()
     {
         return view('frontend.home.authors');
+    }
+
+    public function getEvents()
+    {
+        return view('frontend.home.events');
+    }
+
+    public function getContactUs()
+    {
+        return view('frontend.home.contactus');
     }
 }
