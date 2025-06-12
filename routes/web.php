@@ -27,6 +27,7 @@ Route::get('/books-detail', [HomeController::class, 'getBooks'])->name('page.boo
 Route::get('/authors-detail', [HomeController::class, 'getAuthors'])->name('page.authors');
 Route::get('/events', [HomeController::class, 'getEvents'])->name('page.events');
 Route::get('/contact-us', [HomeController::class, 'getContactUs'])->name('page.contactus');
+Route::post('/contact-us/store', [HomeController::class, 'storeContactUs'])->name('page.store.contactus');
 
 
 
