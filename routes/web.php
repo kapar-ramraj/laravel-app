@@ -28,6 +28,11 @@ Route::get('/authors-detail', [HomeController::class, 'getAuthors'])->name('page
 Route::get('/events', [HomeController::class, 'getEvents'])->name('page.events');
 Route::get('/contact-us', [HomeController::class, 'getContactUs'])->name('page.contactus');
 Route::post('/contact-us/store', [HomeController::class, 'storeContactUs'])->name('page.store.contactus');
+Route::get('/reload-captcha', [HomeController::class, 'getCaptchaSrc'])->name('reload.captcha');
+
+// Route::get('/reload-captcha', function () {
+//     return response()->json(['captcha' => captcha_src()]);
+// })->name('reload.captcha');
 
 
 

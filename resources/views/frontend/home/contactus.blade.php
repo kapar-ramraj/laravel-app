@@ -71,30 +71,53 @@
                     </div>
 
                     <div class="col-lg-8">
-                        <form action="{{route('page.store.contactus')}}" method="post" class="php-email-form" data-aos="fade-up"
-                            data-aos-delay="200">
+                        @include('layouts.flash_message')
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                        <form action="{{ route('page.store.contactus') }}" method="post" class="php-email-form">
                             @csrf
                             <div class="row gy-4">
                                 <div class="col-md-6">
                                     <input type="text" name="name" class="form-control" placeholder="Your Name"
-                                        required="">
+                                        required="" value="{{ old('name') }}">
+                                    @error('name')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-6 ">
                                     <input type="email" class="form-control" name="email" placeholder="Your Email"
-                                        required="">
+                                        required="" value="{{ old('email') }}">
+                                    @error('email')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-12">
                                     <input type="text" class="form-control" name="subject" placeholder="Subject"
-                                        required="">
+                                        required="" value="{{ old('subject') }}">
+                                    @error('subject')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-12">
-                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                                    <textarea class="form-control" name="message" rows="6" placeholder="Message" required="">{{ old('message') }}</textarea>
                                 </div>
                                 <div class="col-md-12">
-                                    <img src="{{ captcha_src() }}" alt="captcha">
+                                    <img src="{{ captcha_src() }}" alt="captcha" id="captcha-image">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary" id="reload-captcha"
+                                        title="Reload Captcha">
+                                        <i class="fas fa-rotate-right"></i>
+                                    </button>
+
                                     <div class="mt-2"></div>
                                     <input type="text" name="captcha"
                                         class="form-control @error('captcha') is-invalid @enderror"
@@ -123,4 +146,18 @@
         </section><!-- /Contact Section -->
 
     </main>
+@endsection
+
+@section('scripts')
+    <script>
+        $('#reload-captcha').on('click', function() {
+            $.ajax({
+                type: 'GET',
+                url: '{{ route('reload.captcha') }}',
+                success: function(data) {
+                    $('#captcha-image').attr('src', data.captcha);
+                }
+            });
+        });
+    </script>
 @endsection
