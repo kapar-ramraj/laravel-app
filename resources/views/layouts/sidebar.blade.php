@@ -86,6 +86,37 @@
                         </ul>
                     </li>
                 @endcanany
+
+                @canany(['category-list','category-create'])
+                    <li class="nav-item">
+                        <a href="#" class="nav-link {{ Request::is('sliders*') ? 'active' : '' }}">
+                        &nbsp;<i class="fa fa-folder-open" aria-hidden="true"></i>&nbsp;
+                            <p>
+                                sliders
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            @can('category-list')
+                            <li class="nav-item">
+                                <a href="{{route('sliders.index')}}" class="nav-link {{ Route::is('sliders.index') ? 'active' : '' }}">
+                                    &nbsp;<i class="fa fa-list" aria-hidden="true"></i>&nbsp;
+                                    <p>sliders List</p>
+                                </a>
+                            </li>
+                            @endcan
+                            @can('category-create')
+                            <li class="nav-item">
+                                <a href="{{route('sliders.create')}}" class="nav-link {{ Route::is('sliders.create') ? 'active' : '' }}">
+                                    &nbsp;<i class="fa fa-plus" aria-hidden="true"></i>&nbsp;
+                                    <p>Create Category</p>
+                                </a>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                @endcanany
+                
                 @canany(['category-list','category-create'])
                     <li class="nav-item">
                         <a href="#" class="nav-link {{ Request::is('categories*') ? 'active' : '' }}">

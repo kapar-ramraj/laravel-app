@@ -6,6 +6,7 @@ use App\Mail\SendEnquiryFeedbackEmail;
 use App\Models\Author;
 use App\Models\Book;
 use App\Models\ContactUs;
+use App\Models\Slider;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -33,7 +34,8 @@ class HomeController extends Controller
         $students = User::where('user_type', 'Student')->get()->count();
         $authors = Author::all()->count();
         $popularBooks = Book::inRandomOrder()->take(3)->get();
-        return view('frontend.home.index', compact('books', 'students', 'authors', 'popularBooks'));
+        $sliders = Slider::where('status',1)->get();
+        return view('frontend.home.index', compact('books', 'students', 'authors', 'popularBooks','sliders'));
     }
 
     public function aboutUs()

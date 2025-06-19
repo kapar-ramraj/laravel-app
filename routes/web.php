@@ -10,6 +10,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\PublisherController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -70,6 +71,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('permissions', PermissionController::class);
 
     Route::resource('roles', RoleController::class);
+    Route::resource('sliders', SliderController::class);
 
     Route::get('/change/password', [UserController::class, 'changePassword'])->name('change.password');
     Route::post('/change/password', [UserController::class, 'updatePassword'])->name('change.password');
